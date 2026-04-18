@@ -7,14 +7,13 @@ import java.awt.*;
 import java.util.List;
 
 /**
- * [KRİTER: Yazılım Mimarisi]
- * UI Katmanı: Hesaplama mantığından (SVMManager) tamamen izoledir.
+ * UI Katmanı: Hesaplama mantığından izole edilmiştir.
  */
 public class Visualizer extends JPanel {
     private final List<Point> points;
     private final SVMManager svm;
-    private final int SCALE = 40; // Ekran ölçeklendirme
-    private final int OFFSET = 250; // Grafik merkezi
+    private final int SCALE = 50;
+    private final int OFFSET = 250;
 
     public Visualizer(List<Point> points, SVMManager svm) {
         this.points = points;
@@ -28,35 +27,37 @@ public class Visualizer extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Kılavuz Çizgiler (Grid)
-        g2.setColor(new Color(230, 230, 230));
-        for(int i=0; i<800; i+=SCALE) g2.drawLine(i, 0, i, 600);
-        for(int i=0; i<600; i+=SCALE) g2.drawLine(0, i, 800, i);
+        // Izgara Sistemi (Grid)
+        g2.setColor(new Color(240, 240, 240));
+        for(int i=0; i<getWidth(); i+=SCALE) g2.drawLine(i, 0, i, getHeight());
+        for(int i=0; i<getHeight(); i+=SCALE) g2.drawLine(0, i, getWidth(), i);
 
-        // Engelleri Çiz
+        // Engeller
         for (Point p : points) {
             g2.setColor(p.label() == 1 ? Color.RED : Color.BLUE);
-            g2.fillOval((int)(p.x() * SCALE) + OFFSET - 5, (int)(-p.y() * SCALE) + OFFSET - 5, 10, 10);
+            g2.fillOval((int)(p.x() * SCALE) + OFFSET - 6, (int)(-p.y() * SCALE) + OFFSET - 6, 12, 12);
         }
 
-        // Karar Sınırı (Siyah - Optimum Hat)
+        // Optimum Karar Sınırı (Siyah)
         g2.setColor(Color.BLACK);
         g2.setStroke(new BasicStroke(3));
         drawLine(g2, svm::getY);
 
-        // Güvenlik Koridoru (Gri Kesikli Çizgiler)
+        // Güvenlik Koridoru (Kesikli Çizgiler)
         g2.setColor(Color.GRAY);
-        float[] dash = {5.0f};
+        float[] dash = {10.0f};
         g2.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f));
         drawLine(g2, svm::getUpperMarginY);
         drawLine(g2, svm::getLowerMarginY);
 
-        g2.drawString("KIRMIZI/MAVİ: Engeller | SİYAH: Optimum Yol | KESİKLİ: Güvenlik Koridoru", 20, 20);
+        g2.setColor(Color.DARK_GRAY);
+        g2.setFont(new Font("Arial", Font.BOLD, 12));
+        g2.drawString("KIRMIZI/MAVİ: Engeller | SİYAH: Optimum Yol | KESİKLİ: Güvenlik Koridoru", 20, 30);
     }
 
     private void drawLine(Graphics2D g2, java.util.function.Function<Double, Double> func) {
         try {
-            int x1 = -20, x2 = 20;
+            int x1 = -10, x2 = 10;
             int px1 = x1 * SCALE + OFFSET;
             int py1 = (int)(-func.apply((double)x1) * SCALE) + OFFSET;
             int px2 = x2 * SCALE + OFFSET;
