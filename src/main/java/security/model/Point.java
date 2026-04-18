@@ -1,10 +1,9 @@
 package security.model;
 
 /**
- * [KRİTER: Bellek Yönetimi]
- * Record kullanımı, verilerin değiştirilemez (immutable) olmasını sağlar.
- * Bu, gereksiz kopya oluşturulmasını önler ve bellek sızıntısı riskini sıfıra indirir.
+ * Record kullanımı immutability (değişmezlik) sağlar.
+ * Yan etkileri önler ve bellek sızıntısı riskini ortadan kaldırır.
  */
 public record Point(double x, double y, int label) {
-    // label: 1 (Sınıf A - Kırmızı), -1 (Sınıf B - Mavi)
+    // label: 1 (Sınıf A), -1 (Sınıf B)
 }
