@@ -7,39 +7,39 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * [KRİTER: Demo ve Senaryo]
- * Bu sınıf, iki farklı engel kümesini simüle eder ve otonom sistemi çalıştırır.
- */
 public class Main {
     public static void main(String[] args) {
-        // [KRİTER: OOP Prensipleri] - Veri kümesi yönetimi
+        System.out.println("[SİSTEM] Otonom Navigasyon Modülü Başlatılıyor...");
+
         List<Point> dataset = new ArrayList<>();
 
-        // Sınıf 1: Yakın Engel Grubu (Kırmızı)
+        // Sınıf 1 (Kırmızı Engeller)
         dataset.add(new Point(1, 4, 1));
         dataset.add(new Point(2, 5, 1));
         dataset.add(new Point(3, 4.5, 1));
-        dataset.add(new Point(1.5, 6, 1));
 
-        // Sınıf -1: Uzak Engel Grubu (Mavi)
-        dataset.add(new Point(5, 1, -1));
-        dataset.add(new Point(6, 2, -1));
-        dataset.add(new Point(7, 1.5, -1));
-        dataset.add(new Point(5.5, 0.5, -1));
+        // Sınıf -1 (Mavi Engeller)
+        dataset.add(new Point(5, 1.5, -1));
+        dataset.add(new Point(6, 2.5, -1));
+        dataset.add(new Point(7, 2, -1));
 
-        // Algoritmayı Çalıştır
+        // Algoritma Eğitimi ve Analiz
         SVMManager svm = new SVMManager();
+        System.out.println("[İŞLEM] SVM Eğitimi Başlatıldı...");
         svm.train(dataset);
 
-        // Görselleştirmeyi Başlat
+        // Terminale matematiksel sonuçları yazdır
+        svm.printResults();
+
+        // Görselleştirme
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Otonom Araç Güvenlik Navigasyon Sistemi");
             frame.add(new Visualizer(dataset, svm));
-            frame.setSize(700, 600);
+            frame.setSize(800, 600);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
+            System.out.println("[UI] Canlı Görselleştirme Ekranı Açıldı.");
         });
     }
 }
