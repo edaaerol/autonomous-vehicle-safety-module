@@ -21,7 +21,7 @@ Proje, OOP prensiplerine uygun olarak 3 ana katmanda izole edilmiştir:
 - **Bellek Yönetimi:** Java record yapısı ve primitive veri tipleri kullanılarak bellek sızıntıları önlenmiş ve RAM kullanımı optimize edilmiştir.
 
 ## 🛠️ Kurulum ve Çalıştırma
-1. Projeyi bilgisayarınıza indirin: `git clone [LINK]`
+1. Projeyi bilgisayarınıza indirin:
 2. IntelliJ IDEA veya herhangi bir Java IDE'si ile açın.
 3. Maven bağımlılıklarının yüklenmesini bekleyin.
 4. `security.Main` sınıfını çalıştırın.
